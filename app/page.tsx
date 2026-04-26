@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import PostForm from "@/components/PostForm";
 import PostList from "@/components/PostList";
 import type { User } from "@supabase/supabase-js";
@@ -14,7 +14,7 @@ export default function Home() {
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    getSupabase().auth.getSession().then(({ data }) => {
       if (!data.session) {
         router.replace("/login");
       } else {
@@ -25,7 +25,7 @@ export default function Home() {
   }, [router]);
 
   async function handleSignOut() {
-    await supabase.auth.signOut();
+    await getSupabase().auth.signOut();
     router.replace("/login");
   }
 

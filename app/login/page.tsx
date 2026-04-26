@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,9 +17,10 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
+    const sb = getSupabase();
     const { error } = isSignUp
-      ? await supabase.auth.signUp({ email, password })
-      : await supabase.auth.signInWithPassword({ email, password });
+      ? await sb.auth.signUp({ email, password })
+      : await sb.auth.signInWithPassword({ email, password });
 
     setLoading(false);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase, Post } from "@/lib/supabase";
+import { getSupabase, Post } from "@/lib/supabase";
 
 type Props = {
   refresh: number;
@@ -14,7 +14,7 @@ export default function PostList({ refresh }: Props) {
   useEffect(() => {
     async function fetchPosts() {
       setLoading(true);
-      const { data } = await supabase
+      const { data } = await getSupabase()
         .from("posts")
         .select("*")
         .order("created_at", { ascending: false })

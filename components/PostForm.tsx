@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 type Props = {
   userId: string;
@@ -17,7 +17,7 @@ export default function PostForm({ userId, onPosted }: Props) {
     if (!content.trim()) return;
 
     setLoading(true);
-    await supabase.from("posts").insert({ user_id: userId, content: content.trim() });
+    await getSupabase().from("posts").insert({ user_id: userId, content: content.trim() });
     setContent("");
     setLoading(false);
     onPosted();
